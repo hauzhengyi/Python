@@ -1,0 +1,69 @@
+'''
+Observatons
+
+Experience Replay:
+
+    Memory capacity too high:
+        Old experiences don't get overwritten, new experiences only take up
+        a small portion of the memory pool. New experiences become less likely to be sampled.
+    Memory capacity too low:
+        Experiences become highly correlated
+    Memory capacity just right:
+        Enough memory space to contain unrelated experiences, while old experiences get cycled out
+        frequently enough
+        
+    High sampling size:
+        Each experience in the memory gets higher chance of being sampled and used to train the NN,
+        but at the cost of a higher computational power.
+    Low sampling size:
+        Each experience in the memory gets lower chance of being sampled and used to train the NN,
+        but is easier to compute.
+        
+    Potential improvements:
+        1. Prioritized experience replay
+            Some rare but important occasions should get higher chance of being used for training
+            
+Target Network:
+
+    Early training:
+        (?) Higher target update period might benefit learning
+        
+    Late training:
+        (?) High target update period might be bad for learning
+        
+Interesting behaviors:
+
+na 8/36/36/4, gma 0.999, eps 0.001, mem 512/10000, tn 5, lr 0.001
+
+    The agent first learns to balance itself, then stay stay afloat. This phase takes a long time because
+    the lander sometimes hovers almost indefinitely. It then learns to move downwards to land on the
+    ground. Finally it learns to land faster, and learns to handle rare situations.
+    
+    At 800+ episodes, agent learns to land harder in such a way that it doesn't crash,
+    rather than landing too carfully, this helps it to save fuel.
+    
+    During mid-phase the agent perfected its landing by always moving to the left, then slowly close
+    in on the landing pad. Whenever it starts from the right, it doesn't know how to land and crashes.
+    Over time, it learns to land from the right. The learning is asymmetric, both left and right has to
+    be learned independently, it cannot learn by mirroring the other side. This shows that although AI
+    can learn complex behaviours, they do not understand the higher context of its surroundings.
+    
+    At ~900 episodes, the agent has already near-perfect landing, but when the training keeps going,
+    it slowly gets worse.
+    
+    
+na 8/24/24/4, gma 0.999, eps 0.001, mem 512/10000, tn 5, lr 0.001
+    
+    Agent might learn to fly indefinitely. Neural network becomes over-trained for that specific episode, 
+    which causes subsequent episodes to fail.
+    
+na 8/24/24/4, gma 0.999, eps 0.001, mem 512/10000, tn 5, lr 0.004
+
+    Agent learns too slow. Still haven't learnt to fly properly at 82 episodes. Gets indefinite flying
+    at episode 82.
+    
+na 8/24/24/4, gma 0.999, eps 0.001, mem 512/10000, tn 5, lr 0.002
+
+    Agents learns faster than previous iteration, Gets indefinite flying at episode 17.
+
+'''
